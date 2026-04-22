@@ -1,0 +1,27 @@
+{
+  "name": "ssr_inventory_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbhijeetRaghuvanshi123/SSR_Inventory_Application.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/AbhijeetRaghuvanshi123/SSR_Inventory_Application/issues"
+  },
+  "homepage": "https://github.com/AbhijeetRaghuvanshi123/SSR_Inventory_Application#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  }
+}
