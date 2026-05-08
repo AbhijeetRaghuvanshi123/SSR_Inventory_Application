@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <% if(locals.items){ %>
+            <ul>
+                <% items.forEach(item => { %>
+                    <li>
+                        <h1><%= item.id %> <%= item.itemname %></h1>
+                        <h2><%= item.itemdescription %></h2>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </body>
+</html>

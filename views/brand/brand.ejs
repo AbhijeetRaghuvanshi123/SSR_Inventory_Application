@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <% if(locals.brand){ %>
+        <h1>
+            <%= brand.id %>. <%= brand.brandname %>
+        </h1>
+        <p>
+            <%= brand.branddescription %>
+        </p>
+        <h2>Added At: <%= brand.added_at %>
+        </h2>
+        <% } %>
+</body>
+
+</html>

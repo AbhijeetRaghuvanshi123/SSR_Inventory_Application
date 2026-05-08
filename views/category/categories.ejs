@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <li><a href="newCategory">Add Category</a></li>
+            </nav>
+        </header>
+        <% if(locals.categories){ %>
+            <ul>
+                <% categories.forEach(category => { %>
+                    <li>
+                        <h2> <%= category.categoryname %> </h2>
+                        <h3><%= category.categorydescription %></h3>
+                        <a href="categories/category?id=<%= category.id %>&category=<%= category.categoryname %>"> View Category</a>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </body>
+</html>

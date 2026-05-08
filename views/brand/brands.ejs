@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <% if(locals.brands){ %>
+            <ul>
+                <% brands.forEach(brand => { %>
+                    <li>
+                        <h2> <%= brand.brandname %> </h2>
+                        <a href="/brands/brand?id=<%= brand.id %>"> View Brand Info</a>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </body>
+</html>

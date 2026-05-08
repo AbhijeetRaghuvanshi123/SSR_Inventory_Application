@@ -9,8 +9,8 @@ const addNewUser = async (user) => {
     await pool.query("INSERT INTO users(username, email) VALUES( $1, $2)", [user.username, user.email]);
 }
 
-const getUser = async (user) => {
-    const rows = await pool.query("SELECT * FROM users WHERE id=$1", [user.id]);
+const getUser = async (id) => {
+    const rows = await pool.query("SELECT * FROM users WHERE id=$1", [id]);
     return rows;
 }
 

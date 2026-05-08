@@ -2,11 +2,11 @@ import userDB from "../db/userQuery.js";
 
 const homeGET =  async ( req, res) => {
     const rows = await userDB.getAllUsers();
-    res.render('home', {  title: 'All Users' ,users: rows.rows});
+    res.render('home/home', {  title: 'All Users' ,users: rows.rows});
 }
 
 const newUserFormGET = async (req, res) => {
-    res.render('newUser', {title: 'Add new User'});
+    res.render('user/newUser', {title: 'Add new User'});
 }
 
 const addNewUserPOST = async (req, res) => {
@@ -15,8 +15,8 @@ const addNewUserPOST = async (req, res) => {
 }
 
 const viewUserGET = async (req, res) => {
-    const rows = await userDB.getUser(req.query);
-    res.render('profile', {title: 'User Profile', user: rows.rows[0]});
+    const rows = await userDB.getUser(req.query.id);
+    res.render('user/profile', {title: 'User Profile', user: rows.rows[0]});
 }
 
 export { homeGET, newUserFormGET, addNewUserPOST, viewUserGET };

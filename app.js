@@ -3,6 +3,9 @@ import express from 'express'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { indexRouter } from './routes/userRoutes.js'
+import { itemsRouter } from './routes/itemRoutes.js'
+import { brandRouter } from './routes/brandRoutes.js'
+import { categoryRouter } from './routes/categoryRoutes.js'
 const app = express();
 
 //setting up dir
@@ -19,6 +22,9 @@ app.set("views", viewPath);
 app.set("view engine", "ejs");
 
 app.use('/', indexRouter);
+app.use('/items', itemsRouter);
+app.use('/brands', brandRouter);
+app.use('/categories', categoryRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
