@@ -1,23 +1,107 @@
-<html>
-    <head>
-        <title><%= title %></title>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <li><a href="newCategory">Add Category</a></li>
-            </nav>
-        </header>
-        <% if(locals.categories){ %>
-            <ul>
-                <% categories.forEach(category => { %>
-                    <li>
-                        <h2> <%= category.categoryname %> </h2>
-                        <h3><%= category.categorydescription %></h3>
-                        <a href="categories/category?id=<%= category.id %>&category=<%= category.categoryname %>"> View Category</a>
-                    </li>
-                <% }) %>
-            </ul>
-        <% } %>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/">Items</a></li>
+        <li><a href="/categories/" class="active">Categories</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Category <span>Index</span></h1>
+        <p class="page-subtitle">Browse and manage item classifications</p>
+      </div>
+      <a href="/categories/newCategory" class="btn-primary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Category
+      </a>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <span class="table-toolbar-title">All Categories</span>
+        <span class="badge"><%= locals.categories ? categories.length : 0 %> records</span>
+      </div>
+
+      <% if (locals.categories && categories.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% categories.forEach(category => { %>
+          <tr>
+            <td>
+              <div class="item-cell">
+                <div class="item-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16M4 4h6l2 3h8v13H4z"/></svg>
+                </div>
+                <span class="item-name"><%= category.categoryname %></span>
+              </div>
+            </td>
+            <td><span class="user-id">#<%= category.id %></span></td>
+            <td style="max-width:280px; color:var(--grey-600); font-size:.875rem;">
+              <%= category.categorydescription ? category.categorydescription.substring(0,80) + (category.categorydescription.length > 80 ? '…' : '') : '—' %>
+            </td>
+            <td>
+              <div style="display:flex; align-items:center; gap:.75rem;">
+                <a href="/categories/category?id=<%= category.id %>&category=<%= encodeURIComponent(category.categoryname) %>" class="action-link">
+                  View
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <form action="/categories/deleteCategory" method="POST" class="inline-delete"
+                      onsubmit="return confirm('Delete <%= category.categoryname %>?')">
+                  <input type="hidden" name="id" value="<%= category.id %>">
+                  <button type="submit" class="btn-danger">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-icon">📂</div>
+        <h3>No Categories Yet</h3>
+        <p>Create a category to start organising your inventory.</p>
+        <br>
+        <a href="/categories/newCategory" class="btn-primary" style="margin-top:.5rem">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Category
+        </a>
+      </div>
+      <% } %>
+    </div>
+
+  </main>
+
+</body>
 </html>

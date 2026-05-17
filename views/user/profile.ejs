@@ -1,11 +1,102 @@
-<html>
-    <head>
-        <title><%= title %></title>
-    </head>
-    <body>
-        <h2><%= user.id %>  | <%= user.username %></h2>
-        <h3>Email: <%= user.email %></h3>
-        <h3>Date Of Join: <%= user.added_at %></h3>
-        <h2><a href="/items/user?id=<%= user.id %>&name=<%= user.username %>">See Inventory</a></h2>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/">Items</a></li>
+        <li><a href="/categories/">Categories</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/" class="active">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="/">Users</a>
+      <span class="breadcrumb-sep">›</span>
+      <span><%= user.username %></span>
+    </nav>
+
+    <div class="card">
+
+      <!-- Profile header -->
+      <div class="profile-header">
+        <div class="profile-avatar"><%= user.username ? user.username[0].toUpperCase() : '?' %></div>
+        <div style="flex:1">
+          <div class="profile-name"><%= user.username %></div>
+          <div class="profile-meta">
+            <% if (user.email) { %><%= user.email %> &nbsp;·&nbsp; <% } %>
+            ID: #<%= user.id %> &nbsp;·&nbsp; Joined: <%= user.added_at %>
+          </div>
+        </div>
+        <span class="badge badge-green">Active</span>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="profile-actions">
+        <a href="/items/user?id=<%= user.id %>&name=<%= encodeURIComponent(user.username) %>" class="btn-secondary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          View Inventory
+        </a>
+        <a href="/items/newItem?id=<%= user.id %>&name=<%= encodeURIComponent(user.username) %>" class="btn-primary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Item
+        </a>
+
+        <div style="flex:1"></div>
+
+        <form action="/deleteUser" method="POST" class="inline-delete"
+              onsubmit="return confirm('Permanently delete <%= user.username %>? All their data may be affected.')">
+          <input type="hidden" name="id" value="<%= user.id %>">
+          <button type="submit" class="btn-danger">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            Delete User
+          </button>
+        </form>
+      </div>
+
+      <!-- Detail fields -->
+      <div class="card-body">
+        <p class="section-title">Account Details</p>
+        <div class="detail-grid">
+          <div class="detail-field">
+            <label>Username</label>
+            <div class="value"><%= user.username %></div>
+          </div>
+          <div class="detail-field">
+            <label>User ID</label>
+            <div class="value-mono">#<%= user.id %></div>
+          </div>
+          <div class="detail-field">
+            <label>Email</label>
+            <div class="value-mono"><%= user.email || '—' %></div>
+          </div>
+          <div class="detail-field">
+            <label>Member Since</label>
+            <div class="value-mono"><%= user.added_at %></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
 </html>

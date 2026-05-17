@@ -19,4 +19,9 @@ const addNewCategoryFormGET = async (req, res) => {
     res.render('category/newCategory');
 }
 
-export {getAllCategoriesGET, getCategoryGET, addNewCategoryPOST, addNewCategoryFormGET};
+const deleteCategoryPOST = async (req, res) => {
+    await categoryDB.deleteCategory(req.body.id);
+    res.redirect('/categories');
+}
+
+export {getAllCategoriesGET, getCategoryGET, addNewCategoryPOST, addNewCategoryFormGET, deleteCategoryPOST};

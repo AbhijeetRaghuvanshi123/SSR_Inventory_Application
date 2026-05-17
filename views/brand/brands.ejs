@@ -1,17 +1,107 @@
-<html>
-    <head>
-        <title><%= title %></title>
-    </head>
-    <body>
-        <% if(locals.brands){ %>
-            <ul>
-                <% brands.forEach(brand => { %>
-                    <li>
-                        <h2> <%= brand.brandname %> </h2>
-                        <a href="/brands/brand?id=<%= brand.id %>"> View Brand Info</a>
-                    </li>
-                <% }) %>
-            </ul>
-        <% } %>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/">Items</a></li>
+        <li><a href="/categories/">Categories</a></li>
+        <li><a href="/brands/" class="active">Brands</a></li>
+        <li><a href="/">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Brand <span>Registry</span></h1>
+        <p class="page-subtitle">Manage supplier and manufacturer records</p>
+      </div>
+      <a href="/brands/newBrand" class="btn-primary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Brand
+      </a>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <span class="table-toolbar-title">All Brands</span>
+        <span class="badge"><%= locals.brands ? brands.length : 0 %> records</span>
+      </div>
+
+      <% if (locals.brands && brands.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% brands.forEach(brand => { %>
+          <tr>
+            <td>
+              <div class="item-cell">
+                <div class="item-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </div>
+                <span class="item-name"><%= brand.brandname %></span>
+              </div>
+            </td>
+            <td><span class="user-id">#<%= brand.id %></span></td>
+            <td style="max-width:300px; color:var(--grey-600); font-size:.875rem;">
+              <%= brand.branddescription ? brand.branddescription.substring(0,80) + (brand.branddescription.length > 80 ? '…' : '') : '—' %>
+            </td>
+            <td>
+              <div style="display:flex; align-items:center; gap:.75rem;">
+                <a href="/brands/brand?id=<%= brand.id %>" class="action-link">
+                  View
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <form action="/brands/deleteBrand" method="POST" class="inline-delete"
+                      onsubmit="return confirm('Delete <%= brand.brandname %>?')">
+                  <input type="hidden" name="id" value="<%= brand.id %>">
+                  <button type="submit" class="btn-danger">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-icon">🏷️</div>
+        <h3>No Brands Yet</h3>
+        <p>Add your first brand to start cataloguing inventory.</p>
+        <br>
+        <a href="/brands/newBrand" class="btn-primary" style="margin-top:.5rem">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Brand
+        </a>
+      </div>
+      <% } %>
+    </div>
+
+  </main>
+
+</body>
 </html>

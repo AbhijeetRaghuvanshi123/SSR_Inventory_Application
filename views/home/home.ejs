@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
@@ -14,8 +14,12 @@
       WarehouseOS
     </a>
     <nav>
-        <li><a href="/items/">All items</a></li>
+      <ul>
+        <li><a href="/items/">Items</a></li>
         <li><a href="/categories/">Categories</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/" class="active">Users</a></li>
+      </ul>
     </nav>
   </header>
 
@@ -24,6 +28,7 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">User <span>Registry</span></h1>
+        <p class="page-subtitle">Warehouse operator accounts</p>
       </div>
       <a href="/new" class="btn-primary">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -70,9 +75,11 @@
       </table>
       <% } else { %>
       <div class="empty-state">
-        <div class="empty-icon">📦</div>
-        <h3>No users found</h3>
-        <p>Add your first user to get started.</p>
+        <div class="empty-icon">👷</div>
+        <h3>No Users Found</h3>
+        <p>Add your first operator to get started.</p>
+        <br>
+        <a href="/new" class="btn-primary" style="margin-top:.5rem">Add User</a>
       </div>
       <% } %>
     </div>

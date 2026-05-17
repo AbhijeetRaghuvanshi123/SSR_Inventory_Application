@@ -1,17 +1,93 @@
-<html>
-    <head>
-        <title> <%= title %></title>
-    </head>
-    <body>
-        <% if(locals.category){ %>
-            <ul>
-                <% category.forEach(item => { %>
-                    <li>
-                        <h1><%= item.id %> <%= item.itemname %></h1>
-                        <h2><%= item.itemdescription %></h2>
-                    </li>
-            <% }) %>
-            </ul>
-        <% } %>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/">Items</a></li>
+        <li><a href="/categories/" class="active">Categories</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="/categories/">Categories</a>
+      <span class="breadcrumb-sep">›</span>
+      <span><%= title %></span>
+    </nav>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Category: <span><%= title %></span></h1>
+        <p class="page-subtitle">Items in this classification</p>
+      </div>
+      <a href="/categories/" class="btn-secondary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        All Categories
+      </a>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <span class="table-toolbar-title">Items</span>
+        <span class="badge"><%= locals.category ? category.length : 0 %> records</span>
+      </div>
+
+      <% if (locals.category && category.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>ID</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% category.forEach(item => { %>
+          <tr>
+            <td>
+              <div class="item-cell">
+                <div class="item-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </div>
+                <span class="item-name"><%= item.itemname %></span>
+              </div>
+            </td>
+            <td><span class="user-id">#<%= item.id %></span></td>
+            <td style="color:var(--grey-600); font-size:.875rem;"><%= item.itemdescription || '—' %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <h3>No Items in This Category</h3>
+        <p>Add items and assign them to this category.</p>
+        <br>
+        <a href="/items/newItem" class="btn-primary" style="margin-top:.5rem">Add Item</a>
+      </div>
+      <% } %>
+    </div>
+
+  </main>
+
+</body>
 </html>

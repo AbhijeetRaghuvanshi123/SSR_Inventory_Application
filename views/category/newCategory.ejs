@@ -1,16 +1,82 @@
-<html>
-    <head>
-        <title>Add new Category</title>
-    </head>
-    <form action="newCategory" method="POST">
-        <label for="name">Enter Category Name</label><br>
-        <input type="text" name="name" id="name">
-        <br><br>
-        <label for="description">Enter Category Description</label><br>
-        <input type="text" name="description" id="description">
-        <br><br>
-        <button type="submit">
-            Add Category
-        </button>
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add New Category — WarehouseOS</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/">Items</a></li>
+        <li><a href="/categories/" class="active">Categories</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="form-page-wrap">
+    <div class="form-container">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="/categories/">Categories</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>New Category</span>
+      </nav>
+
+      <div class="card">
+        <div class="card-header">
+          <h1 class="card-title">Add New <span>Category</span></h1>
+        </div>
+        <div class="card-body">
+
+          <form action="/categories/newCategory" method="POST" autocomplete="off">
+
+            <div class="form-group">
+              <label for="name">Category Name</label>
+              <div class="input-wrap">
+                <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16M4 4h6l2 3h8v13H4z"/></svg>
+                <input type="text" name="name" id="name" placeholder="e.g. Power Tools, Fasteners, Safety" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">
+                Description
+                <span class="optional">(optional)</span>
+              </label>
+              <textarea name="description" id="description" placeholder="What kinds of items belong in this category?"></textarea>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-actions">
+              <a href="/categories/" class="btn-secondary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                Cancel
+              </a>
+              <button type="submit" class="btn-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Save Category
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
 </html>

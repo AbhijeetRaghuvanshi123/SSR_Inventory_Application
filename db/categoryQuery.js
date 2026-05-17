@@ -14,6 +14,10 @@ const addNewCategory = async (category) => {
     await pool.query("INSERT INTO categories(categoryName, categoryDescription) VALUES ( $1, $2 )", [category.name, category.description]);
 }
 
-const categoryDB = {getAllCategories, getCategory, addNewCategory};
+const deleteCategory = async (id) => {
+    await pool.query("DELETE FROM categories WHERE id = $1", [id]);
+}
+
+const categoryDB = {getAllCategories, getCategory, addNewCategory, deleteCategory};
 export default categoryDB;
 

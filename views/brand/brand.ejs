@@ -1,22 +1,82 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>
-        <%= title %>
-    </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
-
 <body>
-    <% if(locals.brand){ %>
-        <h1>
-            <%= brand.id %>. <%= brand.brandname %>
-        </h1>
-        <p>
-            <%= brand.branddescription %>
-        </p>
-        <h2>Added At: <%= brand.added_at %>
-        </h2>
-        <% } %>
-</body>
 
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/">Items</a></li>
+        <li><a href="/categories/">Categories</a></li>
+        <li><a href="/brands/" class="active">Brands</a></li>
+        <li><a href="/">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="/brands/">Brands</a>
+      <span class="breadcrumb-sep">›</span>
+      <span><% if(locals.brand){ %><%= brand.brandname %><% } else { %>Detail<% } %></span>
+    </nav>
+
+    <% if (locals.brand) { %>
+
+    <div class="card">
+      <div class="brand-header">
+        <span class="brand-id-badge">#<%= brand.id %></span>
+        <div>
+          <h1 class="brand-name"><%= brand.brandname %></h1>
+          <p class="brand-desc"><%= brand.branddescription %></p>
+          <p class="brand-meta">Added: <%= brand.added_at %></p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="form-actions" style="justify-content:flex-start; gap:.75rem;">
+          <a href="/brands/" class="btn-secondary">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            All Brands
+          </a>
+          <form action="/brands/deleteBrand" method="POST" class="inline-delete"
+                onsubmit="return confirm('Delete this brand? This cannot be undone.')">
+            <input type="hidden" name="id" value="<%= brand.id %>">
+            <button type="submit" class="btn-danger">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+              Delete Brand
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <% } else { %>
+    <div class="card">
+      <div class="card-body">
+        <div class="empty-state">
+          <div class="empty-icon">🏷️</div>
+          <h3>Brand Not Found</h3>
+          <p>This brand may have been removed.</p>
+          <br>
+          <a href="/brands/" class="btn-secondary">Back to Brands</a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+  </main>
+
+</body>
 </html>

@@ -1,17 +1,100 @@
-<html>
-    <head>
-        <title><%= title %></title>
-    </head>
-    <body>
-        <% if(locals.items){ %>
-            <ul>
-                <% items.forEach(item => { %>
-                    <li>
-                        <h1><%= item.id %> <%= item.itemname %></h1>
-                        <h2><%= item.itemdescription %></h2>
-                    </li>
-                <% }) %>
-            </ul>
-        <% } %>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/" class="active">Items</a></li>
+        <li><a href="/categories/">Categories</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Item <span>Inventory</span></h1>
+        <p class="page-subtitle">All stock-tracked items</p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-toolbar">
+        <span class="table-toolbar-title">All Items</span>
+        <span class="badge"><%= locals.items ? items.length : 0 %> records</span>
+      </div>
+
+      <% if (locals.items && items.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% items.forEach(item => { %>
+          <tr>
+            <td>
+              <div class="item-cell">
+                <div class="item-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </div>
+                <span class="item-name"><%= item.itemname %></span>
+              </div>
+            </td>
+            <td><span class="user-id">#<%= item.id %></span></td>
+            <td style="max-width:280px; color:var(--grey-600); font-size:.875rem;">
+              <%= item.itemdescription ? item.itemdescription.substring(0,80) + (item.itemdescription.length > 80 ? '…' : '') : '—' %>
+            </td>
+            <td>
+              <div style="display:flex; align-items:center; gap:.75rem;">
+                <a href="/items/viewItem?id=<%= item.id %>" class="action-link">
+                  View
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <form action="/items/deleteItem" method="POST" class="inline-delete"
+                      onsubmit="return confirm('Delete <%= item.itemname %>?')">
+                  <input type="hidden" name="id" value="<%= item.id %>">
+                  <button type="submit" class="btn-danger">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <h3>No Items Found</h3>
+        <p>Add your first item to begin tracking inventory.</p>
+        <br>
+        <a href="/items/newItem" class="btn-primary" style="margin-top:.5rem">Add Item</a>
+      </div>
+      <% } %>
+    </div>
+
+  </main>
+
+</body>
 </html>

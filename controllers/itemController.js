@@ -5,9 +5,29 @@ const getAllItemsGET = async (req , res) => {
     res.render('item/items', {title: 'All avilable items' , items: rows.rows});
 }
 
-const getUserItemGET = async (req, res) => {
+const getUserItemsGET = async (req, res) => {
     const rows = await itemDB.getUserItems(req.query.id);
     res.render('item/items', {title: `${req.query.name} Items: `, items: rows.rows});
 }
 
-export {getAllItemsGET, getUserItemGET};
+const getItemGET = async (req, res) => {
+    const {itemRow, usersRows} = await itemDB.getItem(req.query.id);
+    res.render('item/viewItem', { title: itemRow.rows[0].itemname, item: itemRow.rows[0], users: usersRows.rows});
+}
+
+const addNewItemPOST = async (req, res) => {
+    await itemDB.addNewItem(req.body);
+    res.redirect('/items');
+}
+
+const addNewItemGET = async (req, res) => {
+    const {brandRows, categoryRows } = await itemDB.getAllCategoriesAndBrandsNameAndId();
+    res.render('item/newItem.ejs', {title: 'Add new Item', userId: req.query.id, username: req.query.name, categories: categoryRows.rows, brands: brandRows.rows});
+}
+
+const deleteItemPOST = async (req, res) => {
+    await itemDB.deleteItem(req.body.id);
+    res.redirect('/items');
+}
+
+export {getAllItemsGET, getUserItemsGET, addNewItemPOST, addNewItemGET, deleteItemPOST, getItemGET};

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo">
+      <div class="logo-icon">WH</div>
+      WarehouseOS
+    </a>
+    <nav>
+      <ul>
+        <li><a href="/items/" class="active">Items</a></li>
+        <li><a href="/categories/">Categories</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/">Users</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="/items/">Items</a>
+      <span class="breadcrumb-sep">›</span>
+      <span><% if(item){ %><%= item.itemname %><% } else { %>Detail<% } %></span>
+    </nav>
+
+    <% if (item) { %>
+
+    <!-- Item header -->
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="brand-header">
+        <span class="brand-id-badge">#<%= item.id %></span>
+        <div style="flex:1;">
+          <h1 class="brand-name"><%= item.itemname %></h1>
+          <p class="brand-desc"><%= item.itemdescription || '' %></p>
+          <p class="brand-meta">
+            Brand: <strong><%= item.brandname %></strong>
+            &nbsp;·&nbsp; Category: <strong><%= item.categoryname %></strong>
+            &nbsp;·&nbsp; Added by: <strong><%= item.username %></strong>
+          </p>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">In Stock</span>
+          <span class="stat-value"><%= item.quantity != null ? item.quantity : 0 %></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock movement form -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title" style="font-size:1.3rem;">Stock <span>Movement</span></h2>
+      </div>
+      <div class="card-body">
+
+        <form action="/stock" method="POST" autocomplete="off">
+          <input type="hidden" name="item_id" value="<%= item.id %>">
+
+          <div class="form-group">
+            <label>Movement Direction</label>
+            <div class="radio-group">
+              <label class="radio-option radio-in">
+                <input type="radio" name="movement" value="in" required>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                <span class="radio-option-label">Stock In</span>
+              </label>
+              <label class="radio-option radio-out">
+                <input type="radio" name="movement" value="out">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                <span class="radio-option-label">Stock Out</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="stock-form-grid">
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="number" name="quantity" id="quantity" min="1" placeholder="0" required />
+              <p class="form-hint">Units to add or remove</p>
+            </div>
+
+            <div class="form-group">
+              <label for="created_by">Performed By</label>
+              <select name="created_by" id="created_by" required>
+                <% users.forEach(user => { %>
+                  <option value="<%= user.id %>"><%= user.username %></option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="note">
+              Movement Note
+              <span class="optional">(optional)</span>
+            </label>
+            <textarea name="note" id="note" placeholder="Reason for movement, PO number, etc."></textarea>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="form-actions">
+            <a href="/items/" class="btn-secondary">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+              Back to Items
+            </a>
+            <button type="submit" class="btn-primary">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Record Movement
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <% } else { %>
+    <div class="card">
+      <div class="card-body">
+        <div class="empty-state">
+          <div class="empty-icon">📦</div>
+          <h3>Item Not Found</h3>
+          <p>This item may have been deleted.</p>
+          <br>
+          <a href="/items/" class="btn-secondary">Back to Items</a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+  </main>
+
+</body>
+</html>

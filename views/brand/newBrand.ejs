@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title %></title>
+  <title>Add New Brand — WarehouseOS</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -17,8 +17,8 @@
       <ul>
         <li><a href="/items/">Items</a></li>
         <li><a href="/categories/">Categories</a></li>
-        <li><a href="/brands/">Brands</a></li>
-        <li><a href="/" class="active">Users</a></li>
+        <li><a href="/brands/" class="active">Brands</a></li>
+        <li><a href="/">Users</a></li>
       </ul>
     </nav>
   </header>
@@ -29,64 +29,49 @@
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep">›</span>
-        <span>Register New User</span>
+        <a href="/brands/">Brands</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>New Brand</span>
       </nav>
 
       <div class="card">
         <div class="card-header">
-          <h1 class="card-title">Register <span>New User</span></h1>
+          <h1 class="card-title">Add New <span>Brand</span></h1>
         </div>
         <div class="card-body">
 
-          <form action="/new" method="POST" autocomplete="off">
+          <form action="/brands/newBrand" method="POST" autocomplete="off">
 
             <div class="form-group">
-              <label for="username">Username</label>
+              <label for="name">Brand Name</label>
               <div class="input-wrap">
-                <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="e.g. john_doe"
-                  required
-                  autocomplete="off"
-                />
+                <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                <input type="text" name="name" id="name" placeholder="e.g. Bosch, 3M, Caterpillar" required />
               </div>
             </div>
 
             <div class="form-group">
-              <label for="email">
-                Email Address
+              <label for="description">
+                Description
                 <span class="optional">(optional)</span>
               </label>
-              <div class="input-wrap">
-                <svg class="input-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="user@warehouse.com"
-                  autocomplete="off"
-                />
-              </div>
+              <textarea name="description" id="description" placeholder="Brief notes about this brand or supplier…"></textarea>
             </div>
 
             <div class="divider"></div>
 
             <div class="form-actions">
-              <a href="/" class="btn-secondary">
+              <a href="/brands/" class="btn-secondary">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
                 Cancel
               </a>
               <button type="submit" class="btn-primary">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Create User
+                Save Brand
               </button>
             </div>
 
           </form>
-
         </div>
       </div>
 

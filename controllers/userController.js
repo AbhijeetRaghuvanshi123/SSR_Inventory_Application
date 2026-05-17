@@ -19,4 +19,9 @@ const viewUserGET = async (req, res) => {
     res.render('user/profile', {title: 'User Profile', user: rows.rows[0]});
 }
 
-export { homeGET, newUserFormGET, addNewUserPOST, viewUserGET };
+const deleteUserPOST = async (req, res) => {
+    await userDB.deleteUser(req.body.id);
+    res.redirect('/');
+}
+
+export { homeGET, newUserFormGET, addNewUserPOST, viewUserGET, deleteUserPOST };

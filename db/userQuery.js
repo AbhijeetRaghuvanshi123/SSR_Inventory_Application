@@ -14,6 +14,10 @@ const getUser = async (id) => {
     return rows;
 }
 
-const userDB = { getAllUsers, addNewUser, getUser };
+const deleteUser = async (id) => {
+    await pool.query("DELETE FROM users WHERE id = $1", [id]);
+}
+
+const userDB = { getAllUsers, addNewUser, getUser, deleteUser };
 
 export default userDB;

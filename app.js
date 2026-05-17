@@ -6,6 +6,7 @@ import { indexRouter } from './routes/userRoutes.js'
 import { itemsRouter } from './routes/itemRoutes.js'
 import { brandRouter } from './routes/brandRoutes.js'
 import { categoryRouter } from './routes/categoryRoutes.js'
+import { stockRouter } from './routes/stockRoutes.js'
 const app = express();
 
 //setting up dir
@@ -25,6 +26,7 @@ app.use('/', indexRouter);
 app.use('/items', itemsRouter);
 app.use('/brands', brandRouter);
 app.use('/categories', categoryRouter);
+app.use('/stock', stockRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
